@@ -1,7 +1,33 @@
+# Environment
 .env
+
+# Model files (too large for GitHub)
+model/
+tokenizer_cache/
+datasets/
+# Temp scripts
+fix.py
+copy_tokens.py
+
+# Python
 __pycache__/
 *.pyc
-.ipynb_checkpoints/
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
 
-models/
-datasets/
+# Logs
+*.log
+nohup.out
+locust_results.html
+vllm_tokens.txt
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
