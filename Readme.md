@@ -24,21 +24,8 @@ This project fine-tunes a small, fast **1.5B model** for two structured tasks �
 
 ## Architecture
 
-```
-┌─────────────────────────────────┐   ┌──────────────────────────────────────┐
-│         TRAINING                │   │            INFERENCE                 │
-│                                 │   │                                      │
-│  Arabic news ──load──► DeepSeek │   │  Arabic input ──► Prompt builder     │
-│      │                    │     │   │       │                  │            │
-│   format              SFT pairs │   │   tokenize            apply          │
-│      │                    │     │   │       │                  │            │
-│  SFT formatter ─train─► LLaMA- │   │  vLLM :8000 ◄─load─ LoRA adapter    │
-│      │                Factory   │   │       │                              │
-│     log                save     │   │    decode                            │
-│      │                  │       │   │       │                              │
-│  W&B tracking      LoRA adapter │   │  Pydantic parser ──► JSON output    │
-└─────────────────────────────────┘   └──────────────────────────────────────┘
-```
+![Architecture](docs/architecture.svg)
+
 
 > **Note:** GPT-4o is the intended teacher model for knowledge distillation.
 > DeepSeek-R1 (via HuggingFace router) was used in this demo as a free alternative.
