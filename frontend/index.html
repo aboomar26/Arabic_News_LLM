@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +32,6 @@
     flex-direction: column;
   }
 
-  /* Header */
   header {
     border-bottom: 1px solid var(--border);
     padding: 18px 32px;
@@ -48,6 +47,7 @@
     gap: 10px;
     font-size: 17px;
     font-weight: 700;
+    font-family: var(--mono);
   }
 
   .logo-dot {
@@ -83,7 +83,6 @@
   .status-dot.online  { background: var(--accent2); box-shadow: 0 0 6px var(--accent2); }
   .status-dot.offline { background: var(--danger); }
 
-  /* Layout */
   main {
     flex: 1;
     display: grid;
@@ -92,7 +91,7 @@
   }
 
   .panel-left {
-    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     padding: 28px 32px;
@@ -107,7 +106,6 @@
     overflow-y: auto;
   }
 
-  /* Tabs */
   .task-tabs { display: flex; gap: 8px; }
 
   .tab {
@@ -117,8 +115,8 @@
     border: 1px solid var(--border);
     background: transparent;
     color: var(--text2);
-    font-family: var(--sans);
-    font-size: 14px;
+    font-family: var(--mono);
+    font-size: 13px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
@@ -128,7 +126,6 @@
   .tab:hover  { border-color: var(--accent); color: var(--text); }
   .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-  /* Input */
   .input-label {
     font-size: 11px;
     font-weight: 500;
@@ -156,10 +153,9 @@
     direction: rtl;
   }
 
-  textarea:focus       { border-color: var(--accent); }
+  textarea:focus        { border-color: var(--accent); }
   textarea::placeholder { color: var(--text3); }
 
-  /* Lang */
   .lang-row { display: flex; align-items: center; gap: 12px; }
 
   select {
@@ -169,8 +165,8 @@
     border-radius: 8px;
     padding: 10px 14px;
     color: var(--text);
-    font-family: var(--sans);
-    font-size: 14px;
+    font-family: var(--mono);
+    font-size: 13px;
     outline: none;
     cursor: pointer;
     transition: border-color 0.2s;
@@ -178,7 +174,6 @@
 
   select:focus { border-color: var(--accent); }
 
-  /* Submit */
   .btn-submit {
     width: 100%;
     padding: 14px;
@@ -186,24 +181,24 @@
     border: none;
     border-radius: 10px;
     color: #fff;
-    font-family: var(--sans);
-    font-size: 16px;
-    font-weight: 700;
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    letter-spacing: 0.5px;
   }
 
   .btn-submit:hover    { background: #2d5fd8; transform: translateY(-1px); }
   .btn-submit:active   { transform: translateY(0); }
   .btn-submit:disabled { background: var(--border); cursor: not-allowed; transform: none; }
 
-  /* Spinner */
   .spinner {
-    width: 18px; height: 18px;
+    width: 16px; height: 16px;
     border: 2px solid rgba(255,255,255,0.3);
     border-top-color: #fff;
     border-radius: 50%;
@@ -212,7 +207,6 @@
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Output header */
   .output-header {
     padding: 20px 28px 16px;
     border-bottom: 1px solid var(--border);
@@ -238,7 +232,7 @@
     border: 1px solid var(--border);
     background: transparent;
     color: var(--text2);
-    font-size: 12px;
+    font-size: 11px;
     font-family: var(--mono);
     cursor: pointer;
     transition: all 0.2s;
@@ -248,7 +242,6 @@
 
   .output-body { padding: 24px 28px; flex: 1; overflow-y: auto; }
 
-  /* Empty */
   .empty-state {
     display: flex;
     flex-direction: column;
@@ -270,9 +263,8 @@
     font-size: 22px;
   }
 
-  .empty-state p { font-size: 14px; line-height: 1.7; }
+  .empty-state p { font-size: 13px; line-height: 1.7; font-family: var(--mono); }
 
-  /* Result */
   .result-section {
     margin-bottom: 24px;
     animation: fadeUp 0.3s ease forwards;
@@ -291,21 +283,21 @@
   }
 
   .section-label {
-    font-size: 11px;
+    font-size: 10px;
     font-family: var(--mono);
     color: var(--text3);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     margin-bottom: 10px;
   }
 
-  .result-title { font-size: 18px; font-weight: 700; line-height: 1.5; }
+  .result-title { font-size: 18px; font-weight: 700; line-height: 1.5; direction: rtl; }
 
   .category-pill {
     display: inline-block;
     padding: 4px 14px;
     border-radius: 20px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     background: rgba(59,111,240,0.15);
     border: 1px solid rgba(59,111,240,0.35);
@@ -313,7 +305,7 @@
     font-family: var(--mono);
   }
 
-  .keywords-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+  .keywords-wrap { display: flex; flex-wrap: wrap; gap: 8px; direction: rtl; }
 
   .keyword {
     padding: 4px 12px;
@@ -322,9 +314,10 @@
     background: var(--surface2);
     border: 1px solid var(--border);
     color: var(--text2);
+    font-family: var(--sans);
   }
 
-  .summary-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .summary-list { list-style: none; display: flex; flex-direction: column; gap: 10px; direction: rtl; }
 
   .summary-list li {
     display: flex;
@@ -332,6 +325,7 @@
     font-size: 14px;
     line-height: 1.7;
     color: var(--text2);
+    font-family: var(--sans);
   }
 
   .summary-list li::before {
@@ -355,7 +349,7 @@
     border: 1px solid var(--border);
   }
 
-  .entity-value { font-size: 14px; font-weight: 500; }
+  .entity-value { font-size: 14px; font-weight: 500; font-family: var(--sans); direction: rtl; }
 
   .entity-type {
     font-family: var(--mono);
@@ -373,22 +367,20 @@
     line-height: 1.9;
     color: var(--text2);
     direction: ltr;
-    text-align: left;
   }
 
-  /* Error */
   .error-box {
     background: rgba(224,82,82,0.1);
     border: 1px solid rgba(224,82,82,0.3);
     border-radius: 10px;
     padding: 16px 20px;
     color: #f08080;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.7;
+    font-family: var(--mono);
     animation: fadeUp 0.3s ease forwards;
   }
 
-  /* JSON */
   pre {
     background: var(--surface2);
     border: 1px solid var(--border);
@@ -412,31 +404,30 @@
 <header>
   <div class="logo">
     <div class="logo-dot"></div>
-    Arabic News NLP
+    arabic-news-nlp
   </div>
-  <div class="status-badge" onclick="checkHealth()" title="اضغط للتحقق من الاتصال">
+  <div class="status-badge" onclick="checkHealth()" title="Click to check connection">
     <div class="status-dot" id="statusDot"></div>
-    <span id="statusText">فحص الاتصال...</span>
+    <span id="statusText">checking...</span>
   </div>
 </header>
 
 <main>
 
-  <!-- Left: Input -->
   <div class="panel-left">
 
     <div class="task-tabs">
-      <button class="tab active" onclick="setTask('extract', this)">استخراج التفاصيل</button>
-      <button class="tab"        onclick="setTask('translate', this)">ترجمة المقال</button>
+      <button class="tab active" onclick="setTask('extract', this)">extract</button>
+      <button class="tab"        onclick="setTask('translate', this)">translate</button>
     </div>
 
     <div>
-      <div class="input-label">نص المقال</div>
-      <textarea id="storyInput" placeholder="الصق نص المقال العربي هنا..."></textarea>
+      <div class="input-label">article text</div>
+      <textarea id="storyInput" placeholder="Paste Arabic article text here..."></textarea>
     </div>
 
     <div id="langRow" class="lang-row" style="display:none">
-      <div class="input-label" style="margin:0;white-space:nowrap">اللغة المستهدفة</div>
+      <div class="input-label" style="margin:0;white-space:nowrap">target language</div>
       <select id="targetLang">
         <option value="English">English</option>
         <option value="French">French</option>
@@ -446,24 +437,23 @@
     </div>
 
     <button class="btn-submit" id="submitBtn" onclick="submit()">
-      <span id="btnText">تحليل</span>
+      <span id="btnText">→ analyze</span>
     </button>
 
   </div>
 
-  <!-- Right: Output -->
   <div class="panel-right">
     <div class="output-header">
-      <div class="output-title">النتيجة</div>
+      <div class="output-title">output</div>
       <div class="output-actions">
-        <button class="btn-json" onclick="toggleJson()">JSON</button>
-        <button class="btn-copy" onclick="copyResult()">نسخ</button>
+        <button class="btn-json" onclick="toggleJson()">json</button>
+        <button class="btn-copy" onclick="copyResult()">copy</button>
       </div>
     </div>
     <div class="output-body" id="outputBody">
       <div class="empty-state">
         <div class="empty-icon">✦</div>
-        <p>الصق نص مقال عربي<br>واضغط تحليل لتبدأ</p>
+        <p>paste an arabic article<br>and click analyze</p>
       </div>
     </div>
   </div>
@@ -481,28 +471,28 @@
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
     document.getElementById('langRow').style.display = task === 'translate' ? 'flex' : 'none';
-    document.getElementById('btnText').textContent = task === 'extract' ? 'تحليل' : 'ترجمة';
+    document.getElementById('btnText').textContent = task === 'extract' ? '→ analyze' : '→ translate';
     resetOutput();
   }
 
   async function checkHealth() {
     const dot  = document.getElementById('statusDot');
     const text = document.getElementById('statusText');
-    text.textContent = 'جاري الفحص...';
+    text.textContent = 'checking...';
     dot.className = 'status-dot';
     try {
       const r = await fetch(`${API}/health`, { signal: AbortSignal.timeout(5000) });
       const d = await r.json();
       if (d.vllm === 'ok') {
         dot.className = 'status-dot online';
-        text.textContent = 'متصل';
+        text.textContent = 'connected';
       } else {
         dot.className = 'status-dot offline';
-        text.textContent = 'vLLM غير متصل';
+        text.textContent = 'vllm down';
       }
     } catch {
       dot.className = 'status-dot offline';
-      text.textContent = 'API غير متصل';
+      text.textContent = 'api offline';
     }
   }
 
@@ -529,44 +519,44 @@
       });
       const data = await r.json();
 
-      if (!r.ok) { showError(data.detail || 'حدث خطأ غير متوقع'); return; }
+      if (!r.ok) { showError(data.detail || 'unexpected error'); return; }
 
       lastResult = data;
       if (currentTask === 'extract') renderExtraction(data);
       else                           renderTranslation(data);
 
-    } catch {
-      showError('تعذر الاتصال بالـ API — تأكد إن السيرفر شغال على localhost:8000');
+    } catch(e) {
+      showError(`connection failed — make sure the server is running on localhost:8080\n${e}`);
     } finally {
       btn.disabled = false;
-      btn.innerHTML = `<span id="btnText">${currentTask === 'extract' ? 'تحليل' : 'ترجمة'}</span>`;
+      btn.innerHTML = `<span id="btnText">${currentTask === 'extract' ? '→ analyze' : '→ translate'}</span>`;
     }
   }
 
   function renderExtraction(d) {
     document.getElementById('outputBody').innerHTML = `
       <div class="result-section">
-        <div class="section-label">العنوان</div>
+        <div class="section-label">title</div>
         <div class="result-title">${esc(d.story_titel || '—')}</div>
       </div>
       <div class="result-section">
-        <div class="section-label">التصنيف</div>
+        <div class="section-label">category</div>
         <span class="category-pill">${esc(d.story_category || '—')}</span>
       </div>
       <div class="result-section">
-        <div class="section-label">الكلمات المفتاحية</div>
+        <div class="section-label">keywords</div>
         <div class="keywords-wrap">
           ${(d.story_keywords||[]).map(k=>`<span class="keyword">${esc(k)}</span>`).join('')}
         </div>
       </div>
       <div class="result-section">
-        <div class="section-label">الملخص</div>
+        <div class="section-label">summary</div>
         <ul class="summary-list">
           ${(d.story_sammary||[]).map(s=>`<li>${esc(s)}</li>`).join('')}
         </ul>
       </div>
       <div class="result-section">
-        <div class="section-label">الـ Entities (${(d.story_entities||[]).length})</div>
+        <div class="section-label">entities (${(d.story_entities||[]).length})</div>
         <div class="entities-grid">
           ${(d.story_entities||[]).map(e=>`
             <div class="entity-row">
@@ -580,11 +570,11 @@
   function renderTranslation(d) {
     document.getElementById('outputBody').innerHTML = `
       <div class="result-section">
-        <div class="section-label">العنوان المترجم</div>
+        <div class="section-label">translated title</div>
         <div class="translation-title">${esc(d.translated_titel || '—')}</div>
       </div>
       <div class="result-section">
-        <div class="section-label">المحتوى المترجم</div>
+        <div class="section-label">translated content</div>
         <div class="translation-content">${esc(d.translated_content || '—')}</div>
       </div>`;
   }
@@ -598,7 +588,7 @@
     document.getElementById('outputBody').innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">✦</div>
-        <p>الصق نص مقال عربي<br>واضغط تحليل لتبدأ</p>
+        <p>paste an arabic article<br>and click analyze</p>
       </div>`;
   }
 
