@@ -6,7 +6,7 @@ class ExtractionRequest(BaseModel):
 
     # /api/v1/extract
 
-    story :str = Field(..., min_length= 10 , 
+    story :str = Field( min_length= 10 , 
                        description = "The text of the Arabic article from which he wants to extract the details" )
     
     class Config:
@@ -20,13 +20,15 @@ class ExtractionRequest(BaseModel):
 
 class TranslationRequest(BaseModel):
 
-    # /api/v1/extract
+    # /api/v1/translate
 
-    story :str = Field(..., min_length= 10 , 
-                       description = "The text of the Arabic article you want to translate" )
-    target_lang :str = Field(..., min_length= 10 ,
-                        default="English", 
-                       description = "The language you want to translate into" )
+    story: str = Field(
+        min_length=10,
+        description="The text of the Arabic article you want to translate")
+    target_lang: str = Field(
+        default="English",
+        min_length=1,
+        description="The language you want to translate into")
     
     
     class Config:

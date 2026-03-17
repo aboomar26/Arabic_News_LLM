@@ -1,13 +1,12 @@
 # config.py
 
-from pydantic_settings  import BaseSettings
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
 
-
-    #vllm server
-    VLLM_BASE_URL : str =  "http://localhost:8000"
+    # vLLM server (default port 8000). Run this API on another port, e.g. uvicorn app.main:app --port 8001
+    VLLM_BASE_URL: str = "http://localhost:8000"
     VLLM_MODEL_ID : str =  "news-lora"
 
     #base model
@@ -26,6 +25,7 @@ class Settings(BaseSettings):
 
         env_file = ".env"
         env_file_encoding = "utf-8"
+        extra = "ignore"
 
 
 

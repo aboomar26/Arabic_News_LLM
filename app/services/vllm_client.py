@@ -6,7 +6,7 @@ import httpx
 import logging
 from typing import Optional
 
-s
+
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +25,8 @@ class VLLMClient:
         payload = {
             "model": settings.VLLM_MODEL_ID,
             "prompt": prompt,
-            "max_tokens": settings.MAX_TOKENS or max_tokens,
-            "temperature":  settings.TEMPERATURE or temperature
+            "max_tokens": max_tokens if max_tokens is not None else settings.MAX_TOKENS,
+            "temperature": temperature if temperature is not None else settings.TEMPERATURE,
         }
 
         try:
@@ -72,15 +72,13 @@ class VLLMClient:
         return text
     
     async def health(self):
-
-        try :
+        try:
             resp = await self._client.get(
                 f"{settings.VLLM_BASE_URL}/health",
                 timeout=5.0,
             )
-
-
-        except Exception :
+            return resp.status_code == 200
+        except Exception:
             return False
         
     async def close(self):

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arabic News NLP</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f12;
+    --surface: #151820;
+    --surface2: #1c2030;
+    --border: #252a3a;
+    --accent: #3b6ff0;
+    --accent2: #00c9a7;
+    --text: #e8ecf4;
+    --text2: #8892a8;
+    --text3: #4a5268;
+    --danger: #e05252;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Tajawal', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .logo-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent2);
+    box-shadow: 0 0 8px var(--accent2);
+  }
+
+  .status-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .status-badge:hover { border-color: var(--accent); color: var(--text2); }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--text3);
+    transition: background 0.3s;
+  }
+
+  .status-dot.online  { background: var(--accent2); box-shadow: 0 0 6px var(--accent2); }
+  .status-dot.offline { background: var(--danger); }
+
+  /* Layout */
+  main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: calc(100vh - 61px);
+  }
+
+  .panel-left {
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 28px 32px;
+    gap: 20px;
+    overflow-y: auto;
+  }
+
+  .panel-right {
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  /* Tabs */
+  .task-tabs { display: flex; gap: 8px; }
+
+  .tab {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .tab:hover  { border-color: var(--accent); color: var(--text); }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* Input */
+  .input-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text3);
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 220px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.8;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    direction: rtl;
+  }
+
+  textarea:focus       { border-color: var(--accent); }
+  textarea::placeholder { color: var(--text3); }
+
+  /* Lang */
+  .lang-row { display: flex; align-items: center; gap: 12px; }
+
+  select {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  select:focus { border-color: var(--accent); }
+
+  /* Submit */
+  .btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-submit:hover    { background: #2d5fd8; transform: translateY(-1px); }
+  .btn-submit:active   { transform: translateY(0); }
+  .btn-submit:disabled { background: var(--border); cursor: not-allowed; transform: none; }
+
+  /* Spinner */
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Output header */
+  .output-header {
+    padding: 20px 28px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .output-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .output-actions { display: flex; gap: 8px; }
+
+  .btn-copy, .btn-json {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    font-size: 12px;
+    font-family: var(--mono);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-copy:hover, .btn-json:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  .output-body { padding: 24px 28px; flex: 1; overflow-y: auto; }
+
+  /* Empty */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 14px;
+    color: var(--text3);
+    text-align: center;
+  }
+
+  .empty-icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+
+  .empty-state p { font-size: 14px; line-height: 1.7; }
+
+  /* Result */
+  .result-section {
+    margin-bottom: 24px;
+    animation: fadeUp 0.3s ease forwards;
+    opacity: 0;
+  }
+
+  .result-section:nth-child(1) { animation-delay: 0.00s; }
+  .result-section:nth-child(2) { animation-delay: 0.05s; }
+  .result-section:nth-child(3) { animation-delay: 0.10s; }
+  .result-section:nth-child(4) { animation-delay: 0.15s; }
+  .result-section:nth-child(5) { animation-delay: 0.20s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .result-title { font-size: 18px; font-weight: 700; line-height: 1.5; }
+
+  .category-pill {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(59,111,240,0.15);
+    border: 1px solid rgba(59,111,240,0.35);
+    color: #7ca3ff;
+    font-family: var(--mono);
+  }
+
+  .keywords-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .keyword {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text2);
+  }
+
+  .summary-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .summary-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text2);
+  }
+
+  .summary-list li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--accent2);
+    margin-top: 9px;
+    flex-shrink: 0;
+  }
+
+  .entities-grid { display: flex; flex-direction: column; gap: 8px; }
+
+  .entity-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .entity-value { font-size: 14px; font-weight: 500; }
+
+  .entity-type {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(0,201,167,0.1);
+  }
+
+  .translation-title { font-size: 18px; font-weight: 700; margin-bottom: 14px; }
+
+  .translation-content {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text2);
+    direction: ltr;
+    text-align: left;
+  }
+
+  /* Error */
+  .error-box {
+    background: rgba(224,82,82,0.1);
+    border: 1px solid rgba(224,82,82,0.3);
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: #f08080;
+    font-size: 14px;
+    line-height: 1.7;
+    animation: fadeUp 0.3s ease forwards;
+  }
+
+  /* JSON */
+  pre {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text2);
+    white-space: pre-wrap;
+    line-height: 1.7;
+    animation: fadeUp 0.3s ease forwards;
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    Arabic News NLP
+  </div>
+  <div class="status-badge" onclick="checkHealth()" title="اضغط للتحقق من الاتصال">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">فحص الاتصال...</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Left: Input -->
+  <div class="panel-left">
+
+    <div class="task-tabs">
+      <button class="tab active" onclick="setTask('extract', this)">استخراج التفاصيل</button>
+      <button class="tab"        onclick="setTask('translate', this)">ترجمة المقال</button>
+    </div>
+
+    <div>
+      <div class="input-label">نص المقال</div>
+      <textarea id="storyInput" placeholder="الصق نص المقال العربي هنا..."></textarea>
+    </div>
+
+    <div id="langRow" class="lang-row" style="display:none">
+      <div class="input-label" style="margin:0;white-space:nowrap">اللغة المستهدفة</div>
+      <select id="targetLang">
+        <option value="English">English</option>
+        <option value="French">French</option>
+        <option value="German">German</option>
+        <option value="Spanish">Spanish</option>
+      </select>
+    </div>
+
+    <button class="btn-submit" id="submitBtn" onclick="submit()">
+      <span id="btnText">تحليل</span>
+    </button>
+
+  </div>
+
+  <!-- Right: Output -->
+  <div class="panel-right">
+    <div class="output-header">
+      <div class="output-title">النتيجة</div>
+      <div class="output-actions">
+        <button class="btn-json" onclick="toggleJson()">JSON</button>
+        <button class="btn-copy" onclick="copyResult()">نسخ</button>
+      </div>
+    </div>
+    <div class="output-body" id="outputBody">
+      <div class="empty-state">
+        <div class="empty-icon">✦</div>
+        <p>الصق نص مقال عربي<br>واضغط تحليل لتبدأ</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const API = 'http://localhost:8080';
+  let currentTask = 'extract';
+  let lastResult  = null;
+  let showingJson = false;
+
+  function setTask(task, el) {
+    currentTask = task;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('langRow').style.display = task === 'translate' ? 'flex' : 'none';
+    document.getElementById('btnText').textContent = task === 'extract' ? 'تحليل' : 'ترجمة';
+    resetOutput();
+  }
+
+  async function checkHealth() {
+    const dot  = document.getElementById('statusDot');
+    const text = document.getElementById('statusText');
+    text.textContent = 'جاري الفحص...';
+    dot.className = 'status-dot';
+    try {
+      const r = await fetch(`${API}/health`, { signal: AbortSignal.timeout(5000) });
+      const d = await r.json();
+      if (d.vllm === 'ok') {
+        dot.className = 'status-dot online';
+        text.textContent = 'متصل';
+      } else {
+        dot.className = 'status-dot offline';
+        text.textContent = 'vLLM غير متصل';
+      }
+    } catch {
+      dot.className = 'status-dot offline';
+      text.textContent = 'API غير متصل';
+    }
+  }
+
+  async function submit() {
+    const story = document.getElementById('storyInput').value.trim();
+    if (!story) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled  = true;
+    btn.innerHTML = '<div class="spinner"></div>';
+    showingJson   = false;
+    lastResult    = null;
+
+    const endpoint = currentTask === 'extract' ? '/api/v1/extract' : '/api/v1/translate';
+    const body = currentTask === 'extract'
+      ? { story }
+      : { story, target_lang: document.getElementById('targetLang').value };
+
+    try {
+      const r    = await fetch(`${API}${endpoint}`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(body),
+      });
+      const data = await r.json();
+
+      if (!r.ok) { showError(data.detail || 'حدث خطأ غير متوقع'); return; }
+
+      lastResult = data;
+      if (currentTask === 'extract') renderExtraction(data);
+      else                           renderTranslation(data);
+
+    } catch {
+      showError('تعذر الاتصال بالـ API — تأكد إن السيرفر شغال على localhost:8000');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `<span id="btnText">${currentTask === 'extract' ? 'تحليل' : 'ترجمة'}</span>`;
+    }
+  }
+
+  function renderExtraction(d) {
+    document.getElementById('outputBody').innerHTML = `
+      <div class="result-section">
+        <div class="section-label">العنوان</div>
+        <div class="result-title">${esc(d.story_titel || '—')}</div>
+      </div>
+      <div class="result-section">
+        <div class="section-label">التصنيف</div>
+        <span class="category-pill">${esc(d.story_category || '—')}</span>
+      </div>
+      <div class="result-section">
+        <div class="section-label">الكلمات المفتاحية</div>
+        <div class="keywords-wrap">
+          ${(d.story_keywords||[]).map(k=>`<span class="keyword">${esc(k)}</span>`).join('')}
+        </div>
+      </div>
+      <div class="result-section">
+        <div class="section-label">الملخص</div>
+        <ul class="summary-list">
+          ${(d.story_sammary||[]).map(s=>`<li>${esc(s)}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="result-section">
+        <div class="section-label">الـ Entities (${(d.story_entities||[]).length})</div>
+        <div class="entities-grid">
+          ${(d.story_entities||[]).map(e=>`
+            <div class="entity-row">
+              <span class="entity-value">${esc(e.entity_value)}</span>
+              <span class="entity-type">${esc(e.entity_tupe)}</span>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  function renderTranslation(d) {
+    document.getElementById('outputBody').innerHTML = `
+      <div class="result-section">
+        <div class="section-label">العنوان المترجم</div>
+        <div class="translation-title">${esc(d.translated_titel || '—')}</div>
+      </div>
+      <div class="result-section">
+        <div class="section-label">المحتوى المترجم</div>
+        <div class="translation-content">${esc(d.translated_content || '—')}</div>
+      </div>`;
+  }
+
+  function showError(msg) {
+    document.getElementById('outputBody').innerHTML = `<div class="error-box">⚠ ${esc(msg)}</div>`;
+  }
+
+  function resetOutput() {
+    lastResult = null;
+    document.getElementById('outputBody').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">✦</div>
+        <p>الصق نص مقال عربي<br>واضغط تحليل لتبدأ</p>
+      </div>`;
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function toggleJson() {
+    if (!lastResult) return;
+    showingJson = !showingJson;
+    if (showingJson) {
+      document.getElementById('outputBody').innerHTML = `<pre>${esc(JSON.stringify(lastResult,null,2))}</pre>`;
+    } else {
+      if (currentTask === 'extract') renderExtraction(lastResult);
+      else                           renderTranslation(lastResult);
+    }
+  }
+
+  function copyResult() {
+    if (lastResult) navigator.clipboard.writeText(JSON.stringify(lastResult, null, 2));
+  }
+
+  checkHealth();
+  setInterval(checkHealth, 30000);
+</script>
+</body>
+</html>

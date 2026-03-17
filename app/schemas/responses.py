@@ -1,7 +1,7 @@
 # responses.py
 
 
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 from typing import List , Literal , Optional
 
 
@@ -19,26 +19,29 @@ storyEntities = Literal[  "person-male", "person-female", "location", "organizat
 
 
 class Entity(BaseModel):
-    entity_value :str = Field(... , description='the actual name or value of the entity')
+    entity_value :str = Field( description='the actual name or value of the entity')
 
-    entity_type :storyEntities = Field(...,description='the type of recognized entity')
+    entity_type :storyEntities = Field(description='the type of recognized entity')
 
 
 class ExtractionResponse(BaseModel):
-    story_titel: str = Field(...,min_length=10 , max_length=100 ,
+    story_titel: str = Field(min_length=10 , max_length=100 ,
                                         description='A fully informative and SEO optimized titel of the story.')
 
-    story_keywords: List[str] = Field(..., min_items=2 ,
-                                        description = 'Relevant Keywords associated with the story.')
+    story_keywords: List[str] = Field(
+        min_length=2,
+        description='Relevant Keywords associated with the story.')
 
-    story_sammary: List[str] =  Field(...,min_items = 2 ,max_items = 5,
-                                        description='Summarized key points about the story (2-5 points)')
+    story_sammary: List[str] = Field(
+        min_length=2, max_length=5,
+        description='Summarized key points about the story (2-5 points)')
 
-    story_category: storyCategory = Field(...,min_items = 1 ,max_items = 5 ,
-                                        description='category of the news story.')
+    story_category: storyCategory = Field(
+        description='category of the news story.')
 
-    story_entities: List[Entity ] = Field(... ,min_items = 1 ,max_items = 10,
-                                        description = 'List of identified entities in the story.')
+    story_entities: List[Entity] = Field(
+        min_length=1, max_length=10,
+        description='List of identified entities in the story.')
 
 
     class Config:
@@ -61,10 +64,11 @@ class ExtractionResponse(BaseModel):
 # translation response
 
 class TranslationResponse(BaseModel):
-    translated_titel : str = Field(..., min_length = 10 , _length = 300 ,
-                                 description ="Suggested translated title of the news story.")
+    translated_titel: str = Field(
+        min_length=10, max_length=300,
+        description="Suggested translated title of the news story.")
 
-    translated_content : str = Field(... , min_length = 10 ,
+    translated_content : str = Field( min_length = 10 ,
                                    description = "translated content of the news story.")
     
     class Config:

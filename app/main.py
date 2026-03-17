@@ -32,9 +32,9 @@ async def lifespan(app: FastAPI):
     # vLLM check
     healthy = await app.state.vllm_client.health()
     if healthy:
-        logger.info("vLLM server ✓ متصل")
+        logger.info("vLLM server ✓")
     else:
-        logger.warning("vLLM server ✗ مش شغال — تأكد إنك شغّلت start_vllm.sh")
+        logger.warning("vLLM server not working; check scripts/start_vllm.bat (or start_vllm.sh on Linux)")
  
     yield 
  
