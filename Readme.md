@@ -39,9 +39,11 @@ This project fine-tunes a small, fast **1.5B model** for two structured tasks �
 | Metric | Value |
 |--------|-------|
 | Training samples | 2,600 |
+| GPU VRAM used | 12.5 / 15.0 GB |
+| Avg inference latency (T4) | ~14s |
+| Throughput | 311 tokens |
+| Load test users | 20 concurrent |
 | LoRA rank | 64 |
-| Epochs | 3 |
-| Throughput | ~24 tok/sec |
 
 ---
 
@@ -92,8 +94,8 @@ vllm serve "Qwen/Qwen2.5-1.5B-Instruct" \
 
 ### Install
 ```bash
-git clone https://github.com/your-username/arabic-news-nlp-api.git
-cd arabic-news-nlp-api
+git clone https://github.com/aboomar26/Arabic_News_LLM
+cd Arabic_News_LLM
 pip install -r requirements.txt
 ```
 
@@ -146,14 +148,14 @@ cd frontend && python -m http.server 3000
 ```bash
 curl -X POST http://localhost:8080/api/v1/extract \
   -H "Content-Type: application/json" \
-  -d '{"story": "نص المقال العربي..."}'
+  -d '{"story": "the arabic news ..."}'
 ```
 
 ### Translate
 ```bash
 curl -X POST http://localhost:8080/api/v1/translate \
   -H "Content-Type: application/json" \
-  -d '{"story": "نص المقال...", "target_lang": "English"}'
+  -d '{"story": "the article ...", "target_lang": "English"}'
 ```
 
 ---
@@ -196,7 +198,7 @@ locust --headless -f locust.py \
   --html=locust_results.html
 ```
 
-Results: ~24 tokens/sec · 20 concurrent users · 60s duration
+Results: ~311 tokens/sec · 20 concurrent users · 60s duration
 
 ---
 
