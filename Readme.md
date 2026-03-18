@@ -24,10 +24,7 @@ This project fine-tunes a small, fast **1.5B model** for two structured tasks â€
 
 ## Architecture
 
-<p align="center">
-  <img src="docs/architecture.png" width="100%" alt="ArabicLLM Architecture"/>
-</p>
-
+![Architecture](./docs/architecture.png)
 
 
 > **Note:** GPT-4o is the intended teacher model for knowledge distillation.
