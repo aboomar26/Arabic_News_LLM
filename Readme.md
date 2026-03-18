@@ -24,7 +24,7 @@ This project fine-tunes a small, fast **1.5B model** for two structured tasks â€
 
 ## Architecture
 
-![Architecture](docs/architecture.svg)
+![Architecture](docs/architecture.png)
 
 
 > **Note:** GPT-4o is the intended teacher model for knowledge distillation.

@@ -1,132 +1,154 @@
-<svg viewBox="0 0 860 460" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Mono', 'Courier New', monospace">
-<style>
-  .bt { font-size:12px; font-weight:600; fill:#1a1a18; }
-  .bs { font-size:10px; fill:#888780; }
-  .lbl { font-size:10px; fill:#9a9890; }
-  .sec { font-size:9px; fill:#9a9890; letter-spacing:2px; }
-  .cap { font-size:10px; fill:#5a5a56; font-style:italic; }
-</style>
+<svg width="1280" height="520" viewBox="0 0 1280 520" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M1 1L9 5L1 9" fill="none" stroke="#9a9890" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    text { font-family: 'IBM Plex Mono', 'Courier New', monospace; }
+    .title { font-size: 15px; font-weight: 600; fill: #1a1a18; }
+    .sub   { font-size: 12px; fill: #888780; }
+    .lbl   { font-size: 11px; fill: #9a9890; }
+    .sec   { font-size: 10px; fill: #9a9890; letter-spacing: 2px; }
+    .cap   { font-size: 11px; fill: #5a5a56; }
+    .at    { fill: #633806; } .as { fill: #854F0B; }
+    .pt    { fill: #3C3489; } .ps { fill: #534AB7; }
+    .gt    { fill: #085041; } .gs { fill: #0F6E56; }
+  </style>
+</defs>
 
 <!-- background -->
-<rect width="860" height="460" fill="#f8f7f4" rx="8"/>
+<rect width="1280" height="520" fill="#f8f7f4"/>
 
-<!-- section backgrounds -->
-<rect x="20" y="36" width="390" height="390" rx="6" fill="#ffffff" stroke="#e4e2db" stroke-width="1"/>
-<rect x="430" y="36" width="410" height="390" rx="6" fill="#ffffff" stroke="#e4e2db" stroke-width="1"/>
+<!-- section panels -->
+<rect x="30"  y="44" width="540" height="426" rx="8" fill="#ffffff" stroke="#e4e2db" stroke-width="1"/>
+<rect x="640" y="44" width="610" height="426" rx="8" fill="#ffffff" stroke="#e4e2db" stroke-width="1"/>
 
-<!-- section headers -->
-<text class="sec" x="215" y="22" text-anchor="middle">TRAINING PIPELINE</text>
-<line x1="20" y1="28" x2="410" y2="28" stroke="#0F6E56" stroke-width="1.5"/>
+<!-- section lines + labels -->
+<line x1="30"  y1="34" x2="570" y2="34" stroke="#0F6E56" stroke-width="2"/>
+<text class="sec" x="300" y="24" text-anchor="middle">TRAINING PIPELINE</text>
 
-<text class="sec" x="635" y="22" text-anchor="middle">INFERENCE PIPELINE</text>
-<line x1="430" y1="28" x2="840" y2="28" stroke="#185FA5" stroke-width="1.5"/>
+<line x1="640" y1="34" x2="1250" y2="34" stroke="#185FA5" stroke-width="2"/>
+<text class="sec" x="945" y="24" text-anchor="middle">INFERENCE PIPELINE</text>
 
-<!-- ── TRAINING ── -->
-
-<!-- Row 1 -->
-<rect x="44" y="64" width="130" height="52" rx="5" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
-<text class="bt" x="109" y="85" text-anchor="middle">Arabic news</text>
-<text class="bs" x="109" y="102" text-anchor="middle">news-sample.jsonl</text>
-
-<rect x="214" y="64" width="130" height="52" rx="5" fill="#FAEEDA" stroke="#EF9F27" stroke-width="1.5"/>
-<text class="bt" x="279" y="85" text-anchor="middle" fill="#633806">DeepSeek-R1</text>
-<text class="bs" x="279" y="102" text-anchor="middle" fill="#854F0B">teacher model</text>
-
-<line x1="174" y1="90" x2="212" y2="90" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="193" y="83" text-anchor="middle">load</text>
-
-<!-- Row 2 -->
-<rect x="44" y="184" width="130" height="52" rx="5" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
-<text class="bt" x="109" y="205" text-anchor="middle">SFT formatter</text>
-<text class="bs" x="109" y="222" text-anchor="middle">alpaca format</text>
-
-<rect x="214" y="184" width="130" height="52" rx="5" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
-<text class="bt" x="279" y="205" text-anchor="middle" fill="#3C3489">LLaMA-Factory</text>
-<text class="bs" x="279" y="222" text-anchor="middle" fill="#534AB7">LoRA rank=64</text>
-
-<line x1="109" y1="116" x2="109" y2="182" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="121" y="152">format</text>
-
-<line x1="279" y1="116" x2="279" y2="182" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="291" y="152">SFT pairs</text>
-
-<line x1="174" y1="210" x2="212" y2="210" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="193" y="203" text-anchor="middle">train</text>
-
-<!-- Row 3 -->
-<rect x="44" y="304" width="130" height="52" rx="5" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
-<text class="bt" x="109" y="325" text-anchor="middle">W&amp;B tracking</text>
-<text class="bs" x="109" y="342" text-anchor="middle">loss / eval metrics</text>
-
-<rect x="214" y="304" width="130" height="52" rx="5" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
-<text class="bt" x="279" y="325" text-anchor="middle" fill="#085041">LoRA adapter</text>
-<text class="bs" x="279" y="342" text-anchor="middle" fill="#0F6E56">checkpoint-2025/</text>
-
-<line x1="109" y1="236" x2="109" y2="302" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="121" y="272">log</text>
-
-<line x1="279" y1="236" x2="279" y2="302" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="291" y="272">save</text>
-
-<!-- note box -->
-<rect x="44" y="384" width="300" height="28" rx="4" fill="none" stroke="#e4e2db" stroke-width="1" stroke-dasharray="4 3"/>
-<text class="cap" x="194" y="402" text-anchor="middle">GPT-4o in prod · DeepSeek-R1 used in this demo</text>
-
-<!-- ── INFERENCE ── -->
+<!-- ══════════ TRAINING ══════════
+     col1 cx=160  col2 cx=430
+     row1 cy=107  row2 cy=237  row3 cy=367
+     box: w=180 h=54
+-->
 
 <!-- Row 1 -->
-<rect x="450" y="64" width="130" height="52" rx="5" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
-<text class="bt" x="515" y="85" text-anchor="middle">Arabic input</text>
-<text class="bs" x="515" y="102" text-anchor="middle">news story text</text>
+<rect x="70"  y="80" width="180" height="54" rx="6" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
+<text class="title" x="160" y="104" text-anchor="middle">Arabic news</text>
+<text class="sub"   x="160" y="122" text-anchor="middle">news-sample.jsonl</text>
 
-<rect x="620" y="64" width="140" height="52" rx="5" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
-<text class="bt" x="690" y="85" text-anchor="middle">Prompt builder</text>
-<text class="bs" x="690" y="102" text-anchor="middle">task + schema</text>
+<rect x="340" y="80" width="180" height="54" rx="6" fill="#FAEEDA" stroke="#EF9F27" stroke-width="2"/>
+<text class="title at" x="430" y="104" text-anchor="middle">DeepSeek-R1</text>
+<text class="sub   as" x="430" y="122" text-anchor="middle">teacher model</text>
 
-<line x1="580" y1="90" x2="618" y2="90" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="599" y="83" text-anchor="middle">text</text>
+<!-- load → -->
+<line x1="250" y1="107" x2="338" y2="107" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="294" y="100" text-anchor="middle">load</text>
 
 <!-- Row 2 -->
-<rect x="450" y="184" width="130" height="52" rx="5" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
-<text class="bt" x="515" y="205" text-anchor="middle" fill="#085041">vLLM server</text>
-<text class="bs" x="515" y="222" text-anchor="middle" fill="#0F6E56">:8000  CUDA</text>
+<rect x="70"  y="210" width="180" height="54" rx="6" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
+<text class="title" x="160" y="234" text-anchor="middle">SFT formatter</text>
+<text class="sub"   x="160" y="252" text-anchor="middle">alpaca format</text>
 
-<rect x="620" y="184" width="140" height="52" rx="5" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
-<text class="bt" x="690" y="205" text-anchor="middle">LoRA adapter</text>
-<text class="bs" x="690" y="222" text-anchor="middle">news-lora</text>
+<rect x="340" y="210" width="180" height="54" rx="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="2"/>
+<text class="title pt" x="430" y="234" text-anchor="middle">LLaMA-Factory</text>
+<text class="sub   ps" x="430" y="252" text-anchor="middle">LoRA rank=64</text>
 
-<line x1="515" y1="116" x2="515" y2="182" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="527" y="152">tokenize</text>
+<!-- col1 row1→row2 -->
+<line x1="160" y1="134" x2="160" y2="208" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="172" y="175">format</text>
 
-<line x1="690" y1="116" x2="690" y2="182" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="702" y="152">apply</text>
+<!-- col2 row1→row2 -->
+<line x1="430" y1="134" x2="430" y2="208" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="442" y="175">SFT pairs</text>
 
-<line x1="618" y1="210" x2="582" y2="210" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="600" y="203" text-anchor="middle">load</text>
+<!-- train → -->
+<line x1="250" y1="237" x2="338" y2="237" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="294" y="230" text-anchor="middle">train</text>
 
 <!-- Row 3 -->
-<rect x="450" y="304" width="130" height="52" rx="5" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
-<text class="bt" x="515" y="325" text-anchor="middle">Pydantic parser</text>
-<text class="bs" x="515" y="342" text-anchor="middle">schema validation</text>
+<rect x="70"  y="340" width="180" height="54" rx="6" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
+<text class="title" x="160" y="364" text-anchor="middle">W&amp;B tracking</text>
+<text class="sub"   x="160" y="382" text-anchor="middle">loss / eval metrics</text>
 
-<rect x="620" y="304" width="140" height="52" rx="5" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="1.5"/>
-<text class="bt" x="690" y="325" text-anchor="middle" fill="#085041">JSON output</text>
-<text class="bs" x="690" y="342" text-anchor="middle" fill="#0F6E56">structured result</text>
+<rect x="340" y="340" width="180" height="54" rx="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="2"/>
+<text class="title gt" x="430" y="364" text-anchor="middle">LoRA adapter</text>
+<text class="sub   gs" x="430" y="382" text-anchor="middle">checkpoint-2025/</text>
 
-<line x1="515" y1="236" x2="515" y2="302" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="527" y="272">decode</text>
+<!-- col1 row2→row3 -->
+<line x1="160" y1="264" x2="160" y2="338" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="172" y="305">log</text>
 
-<line x1="580" y1="330" x2="618" y2="330" stroke="#9a9890" stroke-width="1" marker-end="url(#arr)"/>
-<text class="lbl" x="599" y="323" text-anchor="middle">parse</text>
+<!-- col2 row2→row3 -->
+<line x1="430" y1="264" x2="430" y2="338" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="442" y="305">save</text>
 
-<!-- bottom caption -->
-<text class="cap" x="430" y="430" text-anchor="middle">knowledge distillation: teacher generates labels → 1.5B student matches quality at zero inference cost</text>
+<!-- note -->
+<rect x="70" y="420" width="480" height="32" rx="4" fill="none" stroke="#e4e2db" stroke-width="1" stroke-dasharray="5 3"/>
+<text class="cap" x="310" y="440" text-anchor="middle">GPT-4o in prod  ·  DeepSeek-R1 used in this demo</text>
 
-<!-- arrow marker -->
-<defs>
-  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-    <path d="M2 1L8 5L2 9" fill="none" stroke="#9a9890" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </marker>
-</defs>
+<!-- ══════════ INFERENCE ══════════
+     col3 cx=760  col4 cx=1030
+     same rows: cy=107, 237, 367
+     box: w=180 h=54
+-->
+
+<!-- Row 1 -->
+<rect x="670" y="80" width="180" height="54" rx="6" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
+<text class="title" x="760" y="104" text-anchor="middle">Arabic input</text>
+<text class="sub"   x="760" y="122" text-anchor="middle">news story text</text>
+
+<rect x="940" y="80" width="180" height="54" rx="6" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
+<text class="title" x="1030" y="104" text-anchor="middle">Prompt builder</text>
+<text class="sub"   x="1030" y="122" text-anchor="middle">task + schema</text>
+
+<!-- text → -->
+<line x1="850" y1="107" x2="938" y2="107" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="894" y="100" text-anchor="middle">text</text>
+
+<!-- Row 2 -->
+<rect x="670" y="210" width="180" height="54" rx="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="2"/>
+<text class="title gt" x="760" y="234" text-anchor="middle">vLLM server</text>
+<text class="sub   gs" x="760" y="252" text-anchor="middle">:8000  CUDA</text>
+
+<rect x="940" y="210" width="180" height="54" rx="6" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
+<text class="title" x="1030" y="234" text-anchor="middle">LoRA adapter</text>
+<text class="sub"   x="1030" y="252" text-anchor="middle">news-lora</text>
+
+<!-- col3 row1→row2 -->
+<line x1="760" y1="134" x2="760" y2="208" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="772" y="175">tokenize</text>
+
+<!-- col4 row1→row2 -->
+<line x1="1030" y1="134" x2="1030" y2="208" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="1042" y="175">apply</text>
+
+<!-- load ← (right to left) -->
+<line x1="938" y1="237" x2="852" y2="237" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="894" y="230" text-anchor="middle">load</text>
+
+<!-- Row 3 -->
+<rect x="670" y="340" width="180" height="54" rx="6" fill="#f8f7f4" stroke="#cccac2" stroke-width="1"/>
+<text class="title" x="760" y="364" text-anchor="middle">Pydantic parser</text>
+<text class="sub"   x="760" y="382" text-anchor="middle">schema validation</text>
+
+<rect x="940" y="340" width="180" height="54" rx="6" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="2"/>
+<text class="title gt" x="1030" y="364" text-anchor="middle">JSON output</text>
+<text class="sub   gs" x="1030" y="382" text-anchor="middle">structured result</text>
+
+<!-- col3 row2→row3 -->
+<line x1="760" y1="264" x2="760" y2="338" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="772" y="305">decode</text>
+
+<!-- parse → -->
+<line x1="850" y1="367" x2="938" y2="367" stroke="#9a9890" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="lbl" x="894" y="360" text-anchor="middle">parse</text>
+
+<!-- caption -->
+<text class="cap" x="640" y="500" text-anchor="middle">knowledge distillation: teacher generates labels → 1.5B student matches quality at zero inference cost</text>
 
 </svg>
