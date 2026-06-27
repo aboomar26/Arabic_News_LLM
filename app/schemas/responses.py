@@ -33,14 +33,13 @@ class ExtractionResponse(BaseModel):
         description='Relevant Keywords associated with the story.')
 
     story_sammary: List[str] = Field(
-        min_length=2, max_length=5,
+        
         description='Summarized key points about the story (2-5 points)')
 
     story_category: storyCategory = Field(
         description='category of the news story.')
 
     story_entities: List[Entity] = Field(
-        min_length=1, max_length=10,
         description='List of identified entities in the story.')
 
 
@@ -64,13 +63,13 @@ class ExtractionResponse(BaseModel):
 # translation response
 
 class TranslationResponse(BaseModel):
-    translated_titel: str = Field(
-        min_length=10, max_length=300,
+    translated_titel: Optional[str] = Field(
+        default=None,
         description="Suggested translated title of the news story.")
 
-    translated_content : str = Field( min_length = 10 ,
+    translated_content : str = Field( 
                                    description = "translated content of the news story.")
-    
+
     class Config:
         json_schema_extra = {
             "example": {

@@ -2,9 +2,14 @@
 .env
 
 # Model files (too large for GitHub)
-model/
+# Locust
+locust/
+locust_results.html
+total_requests_per_second.png
+vllm_tokens.txt
 tokenizer_cache/
 datasets/
+
 # Temp scripts
 fix.py
 copy_tokens.py

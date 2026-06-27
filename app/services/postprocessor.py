@@ -27,7 +27,7 @@ class PostProcessor:
     def strip_chinese(self, text: str) -> str:
         cleaned = _CJK_PATTERN.sub("", text)
         if cleaned != text:
-            logger.warning("شال %d حرف صيني", len(text) - len(cleaned))
+            logger.warning("Stripped Chinese characters: %d", len(text) - len(cleaned))
         return cleaned
 
     def strip_code_fences(self, text: str) -> str:
@@ -47,7 +47,7 @@ class PostProcessor:
         text = self.strip_code_fences(text)
         result = self.parse_json(text)
         if result is None:
-            raise PostProcessingError(f"مش قادر يعمل parse: {raw_text[:200]}")
+            raise PostProcessingError(f"cant parse: {raw_text[:200]}")
         if not isinstance(result, dict):
-            raise PostProcessingError(f"الـ output مش dict")
+            raise PostProcessingError(f"not a dict")
         return result
